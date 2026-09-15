@@ -1,0 +1,39 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.venv-mac/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- 环境与密钥 ----
+.env
+
+# ---- 编辑器 ----
+.idea/
+.vscode/
+*.swp
+
+# ---- 个人准备材料（不公开）----
+讲稿.md
+面试八股文.md
+简历_AI_Agent项目经验.md
+低空多机协同Agent_复用实施方案.md
+multi_agent_section.md
+
+# ---- 临时 / 调试脚本与产物 ----
+_*.py
+_*.txt
+_*.png
+_*.log
+*.log
+tmp_*
+temp_*
+check*.py
+fix_*.py
+insert_multi.py
+b64.txt

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>云雀商城 · 客服管理后台</title>
+  <link rel="stylesheet" href="/web/admin.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">☁</div>
+      <div>
+        <div class="brand-name">客服管理后台</div>
+        <div class="brand-sub">云雀商城 · 运营端</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <a data-tab="overview" class="active">📊 概览</a>
+      <a data-tab="sessions">💬 会话监控</a>
+      <a data-tab="tickets">🎫 工单中心</a>
+      <a data-tab="faq">📚 FAQ 管理</a>
+      <a data-tab="products">🛍 商品</a>
+      <a data-tab="orders">📦 订单</a>
+      <a data-tab="users">👤 用户</a>
+    </nav>
+    <div class="sidebar-foot">
+      <a href="/" target="_blank">← 返回客服聊天页</a>
+      <a href="/debug" target="_blank" style="margin-top:8px;display:block">🔥 调试平台</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- 概览 -->
+    <section class="tab-panel active" id="panel-overview">
+      <h2>运营概览</h2>
+      <div class="stat-grid" id="statGrid"></div>
+      <div class="panel-hint">
+        <p>💡 提示：先到 <strong>工单中心</strong> 处理转人工 / 售后请求；在 <strong>FAQ 管理</strong> 维护机器人知识库；<strong>会话监控</strong> 可实时查看每位用户的对话。</p>
+      </div>
+    </section>
+
+    <!-- 会话 -->
+    <section class="tab-panel" id="panel-sessions">
+      <h2>会话监控</h2>
+      <div class="toolbar">
+        <button id="refreshSessions" class="btn">刷新</button>
+        <span class="muted" id="sessionsCount"></span>
+      </div>
+      <div class="session-layout">
+        <div class="session-list" id="sessionList"></div>
+        <div class="session-detail" id="sessionDetail">
+          <div class="empty">← 选择左侧会话查看对话记录</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 工单 -->
+    <section class="tab-panel" id="panel-tickets">
+      <h2>工单中心</h2>
+      <div class="toolbar">
+        <button id="refreshTickets" class="btn">刷新</button>
+        <select id="ticketFilter" class="select">
+          <option value="">全部状态</option>
+          <option>待处理</option>
+          <option>处理中</option>
+          <option>已完成</option>
+          <option>已转人工</option>
+        </select>
+      </div>
+      <table class="tbl">
+        <thead><tr>
+          <th>工单号</th><th>标题</th><th>类型</th><th>优先级</th>
+          <th>状态</th><th>受理人</th><th>创建时间</th><th>操作</th>
+        </tr></thead>
+        <tbody id="ticketBody"></tbody>
+      </table>
+    </section>
+
+    <!-- FAQ -->
+    <section class="tab-panel" id="panel-faq">
+      <h2>FAQ 知识库</h2>
+      <div class="toolbar">
+        <button id="newFaq" class="btn primary">＋ 新增条目</button>
+      </div>
+      <table class="tbl">
+        <thead><tr><th>标题</th><th>关键词</th><th>内容</th><th>操作</th></tr></thead>
+        <tbody id="faqBody"></tbody>
+      </table>
+    </section>
+
+
+    <!-- 商品 -->
+    <section class="tab-panel" id="panel-products">
+      <h2>商品管理</h2>
+      <div class="toolbar">
+        <button id="newProduct" class="btn primary">＋ 新增商品</button>
+      </div>
+      <table class="tbl">
+        <thead><tr>
+          <th>货号</th><th>名称</th><th>分类</th><th>价格</th><th>库存</th><th>规格</th><th>操作</th>
+        </tr></thead>
+        <tbody id="productBody"></tbody>
+      </table>
+    </section>
+    <!-- 订单 -->
+    <section class="tab-panel" id="panel-orders">
+      <h2>订单</h2>
+      <table class="tbl">
+        <thead><tr>
+          <th>订单号</th><th>手机尾号</th><th>商品</th><th>实付</th><th>状态</th><th>下单时间</th>
+        </tr></thead>
+        <tbody id="orderBody"></tbody>
+      </table>
+    </section>
+
+    <!-- 用户 -->
+    <section class="tab-panel" id="panel-users">
+      <h2>用户</h2>
+      <table class="tbl">
+        <thead><tr><th>用户ID</th><th>昵称</th><th>手机尾号</th><th>会员等级</th><th>积分</th><th>优惠券</th></tr></thead>
+        <tbody id="userBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+
+  <!-- 商品编辑弹窗 -->
+  <div class="modal-mask hidden" id="productModal">
+    <div class="modal">
+      <h3 id="productModalTitle">编辑商品</h3>
+      <div class="form">
+        <label>名称 <input id="productFormName" placeholder="商品名称"></label>
+        <label>分类 <input id="productFormCategory" placeholder="如：数码影音"></label>
+        <div class="form-row">
+          <label>价格（元）<input id="productFormPrice" type="number" step="0.01" placeholder="0.00"></label>
+          <label>库存 <input id="productFormStock" type="number" step="1" placeholder="0"></label>
+        </div>
+        <label>规格 <input id="productFormSpec" placeholder="如：M / L / XL"></label>
+        <label>介绍 <textarea id="productFormDesc" rows="3" placeholder="商品介绍…"></textarea></label>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" id="productModalCancel">取消</button>
+        <button class="btn primary" id="productModalSave">保存</button>
+      </div>
+    </div>
+  </div>
+  <!-- 工单处理弹窗 -->
+  <div class="modal-mask hidden" id="ticketModal">
+    <div class="modal">
+      <h3 id="ticketModalTitle">处理工单</h3>
+      <div class="modal-body" id="ticketModalBody"></div>
+      <div class="modal-foot">
+        <button class="btn" id="ticketModalCancel">取消</button>
+        <button class="btn primary" id="ticketModalSave">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ 编辑弹窗 -->
+  <div class="modal-mask hidden" id="faqModal">
+    <div class="modal">
+      <h3 id="faqModalTitle">编辑 FAQ</h3>
+      <div class="form">
+        <label>标题 <input id="faqFormTitle" placeholder="例如：发货时效说明"></label>
+        <label>关键词（逗号分隔）<input id="faqFormKeywords" placeholder="发货,多久发货,时效"></label>
+        <label>内容 <textarea id="faqFormContent" rows="4" placeholder="官方口径…"></textarea></label>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" id="faqModalCancel">取消</button>
+        <button class="btn primary" id="faqModalSave">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="/web/admin.js"></script>
+</body>
+</html>

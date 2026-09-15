@@ -1,0 +1,20 @@
+[
+  {
+    "user_id": "U10001",
+    "nickname": "追风的云",
+    "phone_tail": "3721",
+    "member_level": "黄金会员",
+    "points": 2680,
+    "coupons": [
+      {"title": "满 300 减 30 全场券", "expire_at": "2026-09-01"}
+    ]
+  },
+  {
+    "user_id": "U10002",
+    "nickname": "芝士就是力量",
+    "phone_tail": "9084",
+    "member_level": "白银会员",
+    "points": 620,
+    "coupons": []
+  }
+]

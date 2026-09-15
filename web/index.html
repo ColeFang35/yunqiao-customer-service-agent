@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>云雀商城 · 智能客服</title>
+  <link rel="stylesheet" href="/web/style.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">☁️</div>
+      <div>
+        <div class="brand-name">云雀商城</div>
+        <div class="brand-sub">智能在线客服</div>
+      </div>
+    </div>
+
+    <button id="new-session-btn" class="new-session">＋ 新的对话</button>
+
+    <div class="quick-list">
+      <div class="section-label">常见问题</div>
+      <div id="quick-prompts"></div>
+    </div>
+
+    <div class="sessions">
+      <div class="section-label">历史会话</div>
+      <div id="session-list"></div>
+    </div>
+
+    <div class="sidebar-foot">
+      <div class="admin-link-row"><a href="/" id="home-link">🏠 返回项目首页</a></div>
+      <div class="admin-link-row"><a href="/admin" id="admin-link">🛠 运营管理后台</a></div>
+      <span class="status-dot" id="status-dot"></span>
+      <span id="status-text">连接中…</span>
+    </div>
+  </aside>
+
+  <main class="chat">
+    <header class="chat-header">
+      <div class="agent-avatar" id="agent-avatar">☁</div>
+      <div>
+        <div class="agent-name" id="agent-name">小云</div>
+        <div class="agent-tagline">在线 · 秒回 · 支持查单/退款/转人工</div>
+      </div>
+      <div class="model-badge" id="model-badge"></div>
+    </header>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="composer-wrap">
+      <div class="composer">
+        <textarea id="input" rows="1" placeholder="请输入您的问题，按 Enter 发送，Shift+Enter 换行"></textarea>
+        <button id="send-btn" class="send-btn" title="发送">➤</button>
+      </div>
+      <div class="composer-hint">智能客服由 AI 生成，重要售后请以订单系统为准 · <a href="/debug" target="_blank">🔥 调试平台</a></div>
+    </div>
+  </main>
+
+  <script src="/web/app.js"></script>
+</body>
+</html>
+

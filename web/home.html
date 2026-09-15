@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>云雀商城 · 智能客服系统 · 课程课题</title>
+<style>
+  :root{
+    --bg:#0f1220; --bg2:#171b2e; --card:#1c2138; --card2:#222845;
+    --line:#2c3354; --txt:#e8eaf6; --muted:#9aa3c7; --acc:#5b8cff;
+    --acc2:#8b5bff; --green:#31d0aa; --amber:#ffb454; --pink:#ff6b9d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:linear-gradient(160deg,var(--bg),var(--bg2));color:var(--txt);
+    font-family:"Segoe UI",system-ui,-apple-system,"Microsoft YaHei",sans-serif;line-height:1.7}
+  a{color:var(--acc);text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;background:rgba(15,18,32,.85);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+  .brand .logo{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));font-size:18px}
+  .nav-links{display:flex;gap:20px;align-items:center}
+  .nav-links a{color:var(--muted);font-size:14px;font-weight:500}
+  .nav-links a:hover{color:var(--txt)}
+  .nav-cta{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff!important;
+    padding:8px 16px;border-radius:9px;font-weight:600}
+  /* hero */
+  .hero{padding:64px 0 40px;text-align:center;position:relative;overflow:hidden}
+  .hero .badge{display:inline-block;font-size:13px;color:var(--acc);border:1px solid var(--line);
+    background:rgba(91,140,255,.08);padding:5px 14px;border-radius:999px;margin-bottom:18px}
+  .hero h1{font-size:44px;font-weight:800;letter-spacing:.5px}
+  .hero h1 span{background:linear-gradient(90deg,var(--acc),var(--acc2),var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.sub{color:var(--muted);font-size:17px;max-width:760px;margin:18px auto 0}
+  .hero .ctas{display:flex;gap:14px;justify-content:center;margin-top:30px;flex-wrap:wrap}
+  .btn{padding:12px 22px;border-radius:10px;font-weight:600;font-size:15px;transition:.2s}
+  .btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
+  .btn.ghost{border:1px solid var(--line);color:var(--txt)}
+  .btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+  .hero .tags{margin-top:34px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .tag{font-size:12.5px;padding:6px 13px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+  .tag b{color:var(--green);font-weight:600}
+  /* sections */
+  section{padding:56px 0}
+  .sec-head{text-align:center;margin-bottom:36px}
+  .sec-head .k{font-size:13px;color:var(--acc);letter-spacing:2px;text-transform:uppercase}
+  .sec-head h2{font-size:30px;font-weight:800;margin-top:6px}
+  .sec-head p{color:var(--muted);margin-top:8px;max-width:680px;margin-left:auto;margin-right:auto}
+  .grid{display:grid;gap:20px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .card h3{font-size:17px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .card p{color:var(--muted);font-size:14px}
+  .card .big{font-size:30px;font-weight:800;color:var(--txt)}
+  .card .lbl{font-size:12.5px;color:var(--muted)}
+    /* mermaid diagrams */
+  .dm{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;max-width:1020px;margin:0 auto;overflow-x:auto}
+  .mmd{display:flex;justify-content:center;min-height:140px}
+  .mmd svg{max-width:100%;height:auto}
+  .mmd-err{color:var(--pink);font-family:Consolas,monospace;font-size:12.5px;white-space:pre-wrap;text-align:left;width:100%}
+
+  /* roadmap */
+  .roadmap-wrap{display:flex;flex-direction:column;align-items:center;gap:28px}
+  .roadmap-center{text-align:center;padding:28px 40px;border-radius:20px;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;
+    box-shadow:0 8px 32px rgba(91,140,255,.25)}
+  .rc-icon{font-size:36px;margin-bottom:8px}
+  .rc-title{font-size:20px;font-weight:800}
+  .rc-sub{font-size:14px;opacity:.9;margin-top:4px}
+  .roadmap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;width:100%}
+  .roadmap-col{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .rc-h{font-size:14px;font-weight:700;color:var(--c);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .rc-item{font-size:13px;color:var(--muted);padding:6px 0;border-bottom:1px dashed var(--line)}
+  .rc-item:last-child{border-bottom:none}
+  /* tabs */
+  .tabs{display:flex;gap:10px;justify-content:center;margin-bottom:26px;flex-wrap:wrap}
+  .tab{padding:9px 20px;border-radius:999px;border:1px solid var(--line);background:transparent;
+    color:var(--muted);cursor:pointer;font-size:14px;font-weight:500;transition:.2s}
+  .tab.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border-color:transparent}
+  .tabpane{display:none} .tabpane.show{display:block}
+  /* highlights */
+  .hl{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;position:relative;overflow:hidden}
+  .hl .ico{font-size:30px;margin-bottom:12px}
+  .hl h3{font-size:16.5px;margin-bottom:8px}
+  .hl p{color:var(--muted);font-size:13.5px}
+  .hl::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--acc),var(--acc2))}
+  /* dir */
+  .dir{font-family:Consolas,monospace;font-size:13px;line-height:1.95;color:var(--muted);white-space:pre}
+  .dir b{color:var(--txt);font-weight:600}
+  .dir .c{color:var(--acc)}
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:40px 0 60px;text-align:center;color:var(--muted);font-size:13.5px}
+  footer .orders{margin-top:16px;font-size:12.5px}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}.hero h1{font-size:32px}.nav-links a:not(.nav-cta){display:none}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap nav-in">
+    <div class="brand"><span class="logo">☁️</span>云雀商城 · 智能客服</div>
+    <div class="nav-links">
+      <a href="#arch">项目架构</a>
+      <a href="#flow">核心流程</a>
+      <a href="#trace">Trace 可观测</a>
+      <a href="#hl">项目亮点</a>
+      <a href="#class">类图设计</a>
+      <a href="#dir">目录结构</a>
+      <a href="#roadmap">学习路线</a>
+      <a href="#interview">面试八股</a>
+      <a class="nav-cta" href="/chat">🎧 体验聊天</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">🎓 课程课题 · 大模型 Agent 实训项目</span>
+    <h1>基于 <span>AgentScope 2.0</span> 的<br/>toC 智能客服系统</h1>
+    <p class="sub">以「云雀商城」为业务背景，完整落地 <b>意图识别 → ReAct 思考 → 工具调用 → 流式回复</b> 的智能客服闭环，涵盖售前 / 售中 / 售后全流程，并配套管理后台与可视化调试平台。</p>
+    <div class="ctas">
+      <a class="btn primary" href="/chat">🚀 立即体验（在线 Demo）</a>
+      <a class="btn ghost" href="/admin">🛠 运营管理后台</a>
+      <a class="btn ghost" href="/debug">🔥 调试平台</a>
+      <a class="btn ghost" href="#arch">📖 了解项目</a>
+    </div>
+    <div class="tags">
+      <span class="tag">框架 <b>AgentScope 2.0</b></span>
+      <span class="tag">后端 <b>FastAPI + SSE</b></span>
+      <span class="tag">模型 <b>服务降级容灾</b></span>
+      <span class="tag">业务 <b>逛·买·支付·售后</b></span>
+      <span class="tag">无需 <b>API Key</b></span>
+      <span class="tag">可观测 <b>调试平台</b></span>
+    </div>
+  </div>
+</header>
+
+<section id="arch">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">01 · Architecture</div>
+      <h2>项目分层架构</h2>
+      <p>参考 AgentScope 2.0 的 Building blocks / Model / Toolkit / State / Permission 分层，映射到真实电商客服业务。</p>
+    </div>
+    <div class="dm"><div class="mmd" id="mmd-arch"></div></div>
+  </div>
+</section>
+
+<section id="flow" style="background:rgba(0,0,0,.12)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">02 · Core Flow</div>
+      <h2>核心流程</h2>
+      <p>从一条用户消息到最终回复的完整链路，以及电商「逛 → 买 → 支付 → 售后」业务闭环。</p>
+    </div>
+    <div class="tabs">
+      <button class="tab on" data-t="t1">💬 对话 / ReAct 流程</button>
+      <button class="tab" data-t="t2">🛒 购物业务闭环</button>
+      <button class="tab" data-t="t3">⚡ SSE 流式事件</button>
+    </div>
+    <div class="tabpane show" id="t1"><div class="dm"><div class="mmd" id="mmd-t1"></div></div></div>
+    <div class="tabpane" id="t2"><div class="dm"><div class="mmd" id="mmd-t2"></div></div></div>
+    <div class="tabpane" id="t3"><div class="dm"><div class="mmd" id="mmd-t3"></div></div></div>
+  </div>
+</section>
+
+<section id="trace">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">03 · Trace & Observability</div>
+      <h2>Trace Hook 可观测设计</h2>
+      <p>不是事后打日志，而是在 ChatStreamer 的事件回调里「埋点」——每一步推理自动生成 Span，零侵入 Agent 核心逻辑。</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <h3>🔍 Trace 链路结构</h3>
+        <p style="margin-top:10px">
+          每条用户消息生成一条 Trace，内部由多个 Span 按父子关系嵌套：<br/><br/>
+          <b>root</b> — 处理用户消息（handle_chat）<br/>
+          ├─ <b>agent</b> — 客服智能体 reply_stream<br/>
+          │   ├─ <b>think</b> — 模型思考过程<br/>
+          │   ├─ <b>text</b> — 回复文本生成<br/>
+          │   ├─ <b>tool</b> — 工具调用决策<br/>
+          │   │   └─ <b>tool_exec</b> — 工具执行 + 结果回填<br/>
+          │   └─ <b>event</b> — 推理轮结束<br/>
+        </p>
+      </div>
+      <div class="card">
+        <h3>🪝 Hook 埋点机制</h3>
+        <p style="margin-top:10px">
+          在 <code>ChatStreamer</code> 的事件翻译层自动开合 Span，无需修改 Agent 内部：<br/><br/>
+          • <b>ToolCallStartEvent</b> → begin_span(kind="tool")<br/>
+          • <b>ToolCallEndEvent</b> → close_span() + begin_span(kind="tool_exec")<br/>
+          • <b>ToolResultEndEvent</b> → close_span(tool_exec)<br/>
+          • <b>ThinkingBlockDeltaEvent</b> → 自动合并连续 think span<br/>
+          • <b>TextBlockDeltaEvent</b> → 自动合并连续 text span<br/>
+          • <b>ReplyEndEvent</b> → 关闭所有未闭合 phase span
+        </p>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <div class="grid g3">
+        <div class="card">
+          <h3>🌲 调用树</h3>
+          <p>单条 trace 的 span 按 parent 关系组织成层级树，逐节点展示耗时、状态与参数/结果详情。点击节点可展开参数和返回预览。</p>
+        </div>
+        <div class="card">
+          <h3>🔥 火焰图</h3>
+          <p>按 (kind, name) 路径聚合多条 trace 的耗时，条宽即耗时占比。一眼定位是哪类操作（模型推理 / 工具执行 / 思考）占大头。</p>
+        </div>
+        <div class="card">
+          <h3>⏱️ 瀑布时间线</h3>
+          <p>Span 甘特条 + reply_end 等瞬时事件打点，直观看到 TTFT（首 token 时间）与各工具耗时在整轮中的位置分布。</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;text-align:center">
+      <p style="color:var(--muted)">数据纯内存存储（TraceStore 环形队列，默认保留最近 200 条），无需外部依赖，开箱即用。</p>
+      <a class="btn primary" href="/debug" style="margin-top:10px">🔥 打开调试平台查看实时 Trace</a>
+    </div>
+  </div>
+</section>
+
+<section id="hl">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">04 · Highlights</div>
+      <h2>项目亮点</h2>
+      <p>不止是调一个接口，而是把 Agent 从「demo」做到「工程化」。</p>
+    </div>
+    <div class="grid g3">
+      <div class="hl"><div class="ico">🧠</div><h3>完整 ReAct 链路</h3><p>基于 AgentScope 2.0 Building blocks，真实呈现「思考 → 工具 → 回复」编排，而非简单问答。</p></div>
+      <div class="hl"><div class="ico">🔧</div><h3>17 个业务工具</h3><p>订单 / 物流 / 退款 / 购物车 / 商品 / 会员 / FAQ / 工单 / 转人工，覆盖电商全流程。</p></div>
+      <div class="hl"><div class="ico">🛡️</div><h3>不编造数据</h3><p>查询类工具 is_read_only=True，写操作先说明并征得同意，真实可信。</p></div>
+      <div class="hl"><div class="ico">⚡</div><h3>SSE 流式体验</h3><p>思考过程、工具调用、回复增量实时逐段推送，前端分卡片展示。</p></div>
+      <div class="hl"><div class="ico">🔄</div><h3>服务降级保障</h3><p>主模型超时/异常自动降级到离线规则模型，业务零中断；支持配置超时阈值与降级策略。</p></div>
+      <div class="hl"><div class="ico">👥</div><h3>多会话隔离</h3><p>每会话独立 Agent，上下文存 AgentState，含 LRU 淘汰与闲置回收。</p></div>
+      <div class="hl"><div class="ico">🔥</div><h3>可观测调试平台</h3><p>调用树 / 火焰图 / 瀑布时间线，把每一步推理链路「打开」给学生看。</p></div>
+      <div class="hl"><div class="ico">🧾</div><h3>管理后台</h3><p>运营 / 人工客服处理工单、维护 FAQ、查看订单与会话。</p></div>
+      <div class="hl"><div class="ico">🎯</div><h3>开箱即用</h3><p>一条命令启动，附演示订单与快速问题，适合课堂现场演示。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="class" style="background:rgba(0,0,0,.12)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">05 · Class Design</div>
+      <h2>核心类与函数</h2>
+      <p>后端以「Agent 编排 + 事件流翻译 + 会话管理 + 工具集」为核心，职责清晰。</p>
+    </div>
+    <div class="dm" style="max-width:1120px"><div class="mmd" id="mmd-cls"></div></div>
+  </div>
+</section>
+
+<section id="dir">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">06 · Project Map</div>
+      <h2>目录结构与学习路线</h2>
+      <p>建议按「入口 → 装配 → 事件 → 工具 → 前端」的顺序阅读源码。</p>
+    </div>
+    <div class="card"><div class="dir"><b>backend/</b>      <span class="c"># FastAPI + AgentScope</span>
+  server.py           <span class="c"># HTTP + SSE 路由入口</span>
+  agent_factory.py    <span class="c"># 装配客服 Agent（State/权限/模型/工具）</span>
+  service.py          <span class="c"># ChatStreamer：Agent 事件 → SSE</span>
+  session_manager.py   <span class="c"># 多会话生命周期</span>
+  models.py           <span class="c"># 主模型 + 降级模型工厂</span>
+  prompts.py          <span class="c"># 客服系统提示词</span>
+  tools/             <span class="c"># 17 个业务工具（FunctionTool）</span>
+  data/              <span class="c"># 商品/订单/购物车/用户/FAQ/工单</span>
+  tracing.py         <span class="c"># 调试平台数据源</span>
+  admin.py / debug.py<span class="c"># 管理后台 & 调试平台路由</span>
+<b>web/</b> <b>frontend</b>          <span class="c"># 聊天页 / 管理后台 / 调试平台 / 首页</span>
+<b>tests/</b> <b>test_flow.py</b>       <span class="c"># 15 条端到端流程测试</span>
+<b>run.py</b> <b>.env.example</b> <b>README.md</b> <span class="c"># 启动 / 配置 / 文档</span></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>☁️ 云雀商城 · 基于 AgentScope 2.0 的 toC 智能客服系统（课程课题）</div>
+    <div class="orders">演示订单：SO20260810001（可查物流）· SO20260812003（可退款）· SO20260815005（可取消）· 手机尾号 3721 / 9084</div>
+  </div>
+</footer>
+<script src="/web/vendor/mermaid.min.js"></script>
+<script>
+  var MMD = {
+    arch: [
+"flowchart TB","  subgraph F[\"🖥️ 前端展示层 · 原生 JS + SSE\"]",
+"    direction LR",
+"    F1[\"/chat 会话页<br/>SSE 流式渲染 · 工具卡片\"]",
+"    F2[\"/admin 管理后台<br/>工单 · FAQ · 订单\"]",
+"    F3[\"/debug 调试平台<br/>Fire Trace 推理链路\"]",
+"  end",
+"  subgraph A[\"🌐 接入层 · FastAPI（server.py）\"]",
+"    A1[\"POST /api/chat（SSE）<br/>/api/sessions · /api/config\"]",
+"  end","  subgraph S[\"🧠 智能体核心层 · AgentScope 2.0\"]",
+"    S1[\"客服 Agent<br/>ReAct 推理循环\"]",
+"    S2[\"ChatStreamer<br/>事件流 → SSE\"]",
+"    S3[\"AgentState<br/>上下文 + 权限\"]",
+"  end",
+"  subgraph T[\"🔧 业务工具层 · 17 个 FunctionTool\"]",
+"    direction LR",
+"    T1[\"orders<br/>订单 / 物流\"]",
+"    T2[\"refunds<br/>退款 / 取消\"]",
+"    T3[\"shop<br/>商品 / 购物车\"]",
+"    T4[\"support · knowledge<br/>FAQ · 工单 · 转人工\"]",
+"  end","  subgraph D[\"💾 数据层 · JSON 模拟订单中台（可替换真实接口）\"]",
+"    direction LR",
+"    D1[(\"products.json\")]",
+"    D2[(\"orders.json\")]",
+"    D3[(\"cart.json\")]",
+"    D4[(\"users.json\")]",
+"    D5[(\"faq.json\")]",
+"  end",
+"  F --> A",
+"  A --> S",
+"  S --> T",
+"  T --> D",
+"  S1 <--> S2",
+"  S1 --- S3","  style F fill:#131729,stroke:#31d0aa",
+"  style A fill:#131729,stroke:#5b8cff",
+"  style S fill:#131729,stroke:#ff6b9d",
+"  style T fill:#131729,stroke:#ffb454",
+"  style D fill:#131729,stroke:#8b5bff",
+"  linkStyle default stroke:#7f8ac0",
+""].join("\n"),
+    t1: [
+"flowchart TB","  U[\"👤 用户输入消息\"] --> R1[\"POST /api/chat<br/>创建/复用会话 → Agent.reply_stream\"]",
+"  R1 --> TH{\"🧠 模型推理（ReAct）<br/>system prompt + AgentState 上下文，判断意图\"}",
+"  TH -->|需要业务数据| TC[\"🔧 调用只读工具（is_read_only）<br/>订单 / 物流 / 退款 / 用户，不编造数据\"]","  TC --> OBS[\"观察结果写回对话上下文\"]",
+"  OBS --> TH",
+"  TH -->|得到最终答案| OUT[\"💬 生成回复\"]",
+"  OUT --> SSE[\"⚡ ChatStreamer 事件翻译<br/>thinking / delta / tool_call / tool_result\"]",
+"  SSE --> FE[\"🖥️ 前端流式渲染 + 写入 Trace<br/>思考折叠区 · 工具卡片 · 回复增量\"]",
+"  style TH fill:#2a2150,stroke:#8b5bff",
+"  style TC fill:#2c2416,stroke:#ffb454",
+"  style FE fill:#16302a,stroke:#31d0aa",
+""].join("\n"),
+    t2: [
+"flowchart LR","  B1[\"① 逛 / 查商品<br/>list_products · query_product\"] --> B2[\"② 加购物车<br/>add_to_cart · view_cart\"]",
+"  B2 --> B3[\"③ 下单<br/>place_order<br/>核对地址 / 明细 / 金额\"]",
+"  B3 --> B4[\"④ 支付<br/>pay_order<br/>确认后模拟支付\"]",
+"  B4 --> B5[\"⑤ 售后<br/>apply_refund · cancel_order<br/>create_ticket · transfer_to_human\"]",
+"  style B1 fill:#16302a,stroke:#31d0aa",
+"  style B5 fill:#2c1f2c,stroke:#ff6b9d",
+""].join("\n"),
+    t3: [
+"sequenceDiagram","  autonumber",
+"  participant FE as 前端 /chat",
+"  participant API as FastAPI 路由",
+"  participant ST as ChatStreamer",
+"  participant AG as 客服 Agent",
+"  participant TL as 工具层 Toolkit",
+"  FE->>API: POST /api/chat（建立 SSE 连接）",
+"  API-->>FE: meta（会话 / 模型信息）",
+"  API->>AG: reply_stream(msg)","  loop ReAct 推理轮次",
+"    AG->>ST: thinking / delta",
+"    ST-->>FE: thinking / delta",
+"    AG->>TL: tool_call（工具名 + 参数）",
+"    TL-->>AG: tool_result（执行结果）",
+"    ST-->>FE: tool_call / tool_call_args / tool_result",
+"  end",
+"  ST-->>FE: done / hint / error",
+"  ST->>ST: 写入 Trace（调试平台）",
+""].join("\n"),
+    cls: [
+"classDiagram","  class Agent {",
+"    +String name",
+"    +String system_prompt",
+"    +ChatModelBase model",
+"    +Toolkit toolkit",
+"    +AgentState state",
+"    +reply_stream()",
+"  }",
+"  class ChatStreamer {",
+"    +run() SSE generator",
+"    +on_event()",
+"    +record_trace()",
+"  }",
+"  class SessionManager {",
+"    +create()",
+"    +get(session_id)",
+"    +list()",
+"    +stop()",
+"  }","  class ChatModelBase {",
+"    +primary_model",
+"    +fallback_model",
+"    +auto_degrade()",
+"  }",
+"  class Toolkit {",
+"    +FunctionTool tools[17]",
+"    +is_read_only(tool_name)",
+"  }",
+"  class AgentState {",
+"    +List context",
+"    +Permission permission",
+"  }",
+"  class Schemas {",
+"    ChatRequest",
+"    SessionInfo",
+"    ConfigResponse",
+"  }","  SessionManager \"1\" o-- \"n\" Agent : manage",
+"  Agent --> ChatModelBase : inference",
+"  Agent --> Toolkit : call",
+"  Agent --* AgentState : maintain",
+"  ChatStreamer ..> Agent : subscribe",
+"  SessionManager ..> ChatStreamer : orchestrate",
+""].join("\n")
+  };  if (window.mermaid) {
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: "loose",
+      theme: "base",
+      fontFamily: "Segoe UI, Microsoft YaHei, system-ui, sans-serif",
+      themeVariables: {
+        background: "#0f1220",
+        primaryColor: "#1f2542",
+        primaryTextColor: "#e8eaf6",
+        primaryBorderColor: "#5b8cff",
+        lineColor: "#7f8ac0",
+        secondaryColor: "#222845",
+        tertiaryColor: "#171b2e",        mainBkg: "#1c2138",
+        nodeBorder: "#3a4270",
+        clusterBkg: "#151a2e",
+        clusterBorder: "#2c3354",
+        edgeLabelBackground: "#171b2e",
+        titleColor: "#e8eaf6",
+        actorBkg: "#1c2138",
+        actorBorder: "#5b8cff",
+        actorTextColor: "#e8eaf6",
+        actorLineColor: "#7f8ac0",
+        signalColor: "#c9d2f5",
+        signalTextColor: "#dbe1fb",
+        labelBoxBkgColor: "#222845",
+        labelTextColor: "#e8eaf6",        loopTextColor: "#9aa3c7",
+        noteBkgColor: "#222845",
+        noteBorderColor: "#3a4270",
+        noteTextColor: "#e8eaf6",
+        classText: "#e8eaf6",
+        activationBkgColor: "#222845"
+      },
+      flowchart: { htmlLabels: true, curve: "linear", nodeSpacing: 28, rankSpacing: 46, padding: 12 },
+      sequence: { wrap: true, width: 170, actorMargin: 60 }
+    });
+  }  function renderMmd(id){
+    var el = document.getElementById("mmd-"+id);
+    if(!el || el.dataset.done === "1" || !window.mermaid || !MMD[id]){
+      if(el && !MMD[id]) el.innerHTML = "<div class=\"mmd-err\">No MMD data for "+id+"</div>";
+      return;
+    }
+    try{
+      mermaid.render("svg-"+id, MMD[id]).then(function(res){
+        el.innerHTML = res.svg;
+        el.dataset.done = "1";
+      }).catch(function(err){
+        el.innerHTML = "<div class=\"mmd-err\">[Render] "+String(err && err.message ? err.message : err)+"</div>";
+      });
+    }catch(syncErr){
+      el.innerHTML = "<div class=\"mmd-err\">[Sync] "+String(syncErr && syncErr.message ? syncErr.message : syncErr)+"</div>";
+    }
+  }
+  function renderAllMmd(){
+    ["arch","t1","t2","t3","cls"].forEach(function(id){ renderMmd(id); });
+  }
+  window.addEventListener("load", renderAllMmd);  document.querySelectorAll(".tab").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".tab").forEach(function(b){b.classList.remove("on")});
+      document.querySelectorAll(".tabpane").forEach(function(p){p.classList.remove("show")});
+      btn.classList.add("on");
+      var pane = document.getElementById(btn.dataset.t);
+      pane.classList.add("show");
+      renderMmd(btn.dataset.t);
+    });
+  });  var navLinks = document.querySelectorAll(".nav-links a[href^='#']");
+  function onScroll(){
+    var pos = window.scrollY + 120;
+    navLinks.forEach(function(a){
+      var sec = document.querySelector(a.getAttribute("href"));
+      if(sec && sec.offsetTop <= pos){ navLinks.forEach(function(x){x.style.opacity=".6"}); a.style.opacity="1"; }
+    });
+  }
+  window.addEventListener("scroll", onScroll);
+</script>
+<section <section id="interview" style="background:rgba(0,0,0,.12)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">07 · Interview Prep</div>
+      <h2>面试八股文体系</h2>
+      <p>围绕本项目整理的完整面试题库与深度考点，覆盖基础认知、技术细节、深度拷打三个层次，以及 19 个核心八股考点。</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>🟢 L1 基础认知层（必会）</h3>
+        <p style="margin-top:10px">
+          <b>Q1</b> 项目是做什么的？解决了什么问题？<br/>
+          <b>Q2</b> 为什么选 AgentScope，而不是 LangChain？<br/>
+          <b>Q3</b> 什么是 ReAct？和传统 Prompt 有什么区别？<br/>
+          <b>Q4</b> SSE 是什么？项目中为什么选 SSE？<br/>
+          <b>Q5</b> 前端怎么展示思考过程、工具调用和回复？
+        </p>
+      </div>
+      <div class="card">
+        <h3>🟡 L2 技术细节层（加分）</h3>
+        <p style="margin-top:10px">
+          <b>Q6</b> Agent 是怎么装配的？系统提示词写了什么？<br/>
+          <b>Q7</b> is_read_only 怎么工作？写操作怎么保证安全？<br/>
+          <b>Q8</b> 没做 RAG，怎么解决模型幻觉？<br/>
+          <b>Q9</b> 多会话管理怎么设计？LRU + TTL 怎么实现？<br/>
+          <b>Q10</b> mock 模型怎么实现？没网络也能跑 ReAct？
+        </p>
+      </div>
+    </div>
+
+    <div style="margin-top:20px">
+      <div class="grid g2">
+        <div class="card">
+          <h3>🔴 L3 深度拷打层（拉开区分度）</h3>
+          <p style="margin-top:10px">
+            <b>Q11</b> 1000 用户并发，架构能扛住吗？瓶颈在哪？<br/>
+            <b>Q12</b> 模型 thinking 时开始编造数据，怎么拦截？<br/>
+            <b>Q13</b> SSE 断了前端怎么恢复？会不会丢消息？<br/>
+            <b>Q14</b> 用户说"帮我退刚才那个"，Agent 怎么知道退哪单？<br/>
+            <b>Q15</b> 项目想真正上线，还差哪些工作？
+          </p>
+        </div>
+        <div class="card">
+          <h3>🚀 进阶扩展题（高频加分）</h3>
+          <p style="margin-top:10px">
+            <b>Q</b> 日均百万级对话怎么改造？<br/>
+            <b>Q</b> 怎么评估客服系统效果？（指标有哪些）<br/>
+            <b>Q</b> 模型跳过 policy 直接退款怎么办？<br/>
+            <b>Q</b> 怎么防止 prompt injection 攻击？<br/>
+            <b>Q</b> 工具调用超时/失败怎么办？<br/>
+            <b>Q</b> FAQ 内容更新怎么让 Agent 感知？<br/>
+            <b>Q</b> 上下文太长超出 token 限制怎么办？<br/>
+            <b>Q</b> 和 LLM+FC demo 有什么区别？<br/>
+            <b>Q</b> 怎么加情感分析功能？
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px">
+      <div class="card" style="max-width:900px;margin:0 auto">
+        <h3>📚 19 个深度八股考点</h3>
+        <p style="margin-top:10px;line-height:2">
+          <b>考点1</b> ReAct vs CoT vs ToT · <b>考点2</b> SSE vs WebSocket vs 长轮询<br/>
+          <b>考点3</b> FastAPI 异步模型 · <b>考点4</b> 文件锁并发 vs 数据库事务<br/>
+          <b>考点5</b> LRU 缓存设计 · <b>考点6</b> 可观测性 Tracing / Span / 火焰图<br/>
+          <b>考点7</b> 服务降级与熔断 · <b>考点8</b> Prompt Engineering<br/>
+          <b>考点9</b> Function Calling 原理 · <b>考点10</b> RAG vs Fine-tuning<br/>
+          <b>考点11</b> 无 RAG 防幻觉 · <b>考点12</b> 记忆系统设计<br/>
+          <b>考点13</b> AgentScope 框架选型 · <b>考点14</b> AgentScope 事件流<br/>
+          <b>考点15</b> AgentState 管理 · <b>考点16</b> Permission 权限<br/>
+          <b>考点17</b> MCP 通用协议 · <b>考点18</b> Skills 技能系统<br/>
+          <b>考点19</b> MCP + Skills 面试高频题
+        </p>
+      </div>
+    </div>
+
+    <div style="margin-top:20px">
+      <div class="card" style="max-width:720px;margin:0 auto">
+        <h3>💡 面试杀手锏模板</h3>
+        <p style="margin-top:10px;color:var(--muted)">
+          "这个问题在我们项目中确实遇到过。我们的做法是 ______，当时的主要挑战是 ______，后来通过 ______ 解决的。如果让我重新设计，我可能会考虑 ______，因为 ______。"
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">06.5 · Learning Roadmap</div>
+      <h2>学习路线脑图</h2>
+      <p>从框架入门到面试输出，建议按「Agent 框架 → 工程化 → 平台能力 → 业务落地 → 前沿扩展 → 面试准备」的顺序深入。</p>
+    </div>
+    <div class="roadmap-wrap">
+      <div class="roadmap-center">
+        <div class="rc-icon">📚</div>
+        <div class="rc-title">智能客服项目</div>
+        <div class="rc-sub">学习路线</div>
+      </div>
+      <div class="roadmap-grid">
+        <div class="roadmap-col">
+          <div class="rc-h" style="--c:var(--acc)">Agent 框架层</div>
+          <div class="rc-item">AgentScope 2.0 架构</div>
+          <div class="rc-item">ReAct 推理循环</div>
+          <div class="rc-item">Function Calling 原理</div>
+          <div class="rc-item">AgentState 上下文管理</div>
+        </div>
+        <div class="roadmap-col">
+          <div class="rc-h" style="--c:var(--green)">工程化设计</div>
+          <div class="rc-item">提示词模板工程化</div>
+          <div class="rc-item">意图识别实现</div>
+          <div class="rc-item">多轮对话记忆系统</div>
+          <div class="rc-item">服务降级容灾</div>
+        </div>
+        <div class="roadmap-col">
+          <div class="rc-h" style="--c:var(--amber)">平台能力</div>
+          <div class="rc-item">SSE 流式事件</div>
+          <div class="rc-item">Trace 可观测</div>
+          <div class="rc-item">Hook 埋点</div>
+          <div class="rc-item">会话管理 LRU+TTL</div>
+        </div>
+        <div class="roadmap-col">
+          <div class="rc-h" style="--c:var(--pink)">业务落地</div>
+          <div class="rc-item">17 个业务工具集</div>
+          <div class="rc-item">购物流程闭环</div>
+          <div class="rc-item">退款/物流/工单链路</div>
+        </div>
+        <div class="roadmap-col">
+          <div class="rc-h" style="--c:#8b5bff">前沿扩展</div>
+          <div class="rc-item">MCP 通用协议</div>
+          <div class="rc-item">Skills 技能系统</div>
+          <div class="rc-item">RAG 向量检索</div>
+        </div>
+        <div class="roadmap-col">
+          <div class="rc-h" style="--c:#ff6b6b">面试准备</div>
+          <div class="rc-item">状态机设计</div>
+          <div class="rc-item">八股文体系 21 考点</div>
+          <div class="rc-item">项目亮点输出</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</body>
+</html>

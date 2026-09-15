@@ -1,0 +1,60 @@
+[
+  {
+    "ticket_id": "TK4A3C1342E0",
+    "title": "转人工客服请求",
+    "detail": "转人工原因：用户要求转人工：我要转人工客服",
+    "category": "other",
+    "contact": "",
+    "order_id": "",
+    "priority": "high",
+    "status": "已转人工",
+    "created_at": "2026-08-20 16:25",
+    "assignee": "",
+    "reply": "",
+    "replied_at": "2026-08-20 16:26"
+  },
+  {
+    "ticket_id": "TK5E42C614B4",
+    "title": "催件：SO20260810001 云雀速运已派送多日未送达",
+    "detail": "订单 SO20260810001（云雀 Elife X3 真无线降噪耳机）由云雀速运承运，运单号 YL8820472631，8月16日已处于「浦东张江营业点派送中」，截止今日（8月21日）仍未签收，帮客户催件并跟进物流状态。客户联系方式尾号 1888。",
+    "category": "logistics",
+    "contact": "1888",
+    "order_id": "",
+    "priority": "normal",
+    "status": "待处理",
+    "created_at": "2026-08-21 16:25"
+  },
+  {
+    "ticket_id": "TKDC611483FB",
+    "title": "转人工客服请求",
+    "detail": "转人工原因：用户明确要求转接人工客服",
+    "category": "other",
+    "contact": "",
+    "order_id": "",
+    "priority": "high",
+    "status": "待处理",
+    "created_at": "2026-08-29 14:14"
+  },
+  {
+    "ticket_id": "TKB97A63F6F4",
+    "title": "转人工客服请求",
+    "detail": "转人工原因：用户要求转人工：我要转人工客服",
+    "category": "other",
+    "contact": "",
+    "order_id": "",
+    "priority": "high",
+    "status": "待处理",
+    "created_at": "2026-09-08 15:24"
+  },
+  {
+    "ticket_id": "TKECCBCC8A01",
+    "title": "退款申请（仅退款）",
+    "detail": "订单 SO20260812003 申请仅退款，原因：用户申请退款",
+    "category": "refund",
+    "contact": "",
+    "order_id": "SO20260812003",
+    "priority": "high",
+    "status": "待处理",
+    "created_at": "2026-09-08 16:51"
+  }
+]

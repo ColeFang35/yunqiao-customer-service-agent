@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>云雀商城 · 调试平台 · Fire Trace</title>
+  <link rel="stylesheet" href="/web/admin.css">
+  <link rel="stylesheet" href="/web/debug.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">🔥</div>
+      <div>
+        <div class="brand-name">调试管理平台</div>
+        <div class="brand-sub">Fire Trace · trace 可视化</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <a data-tab="dashboard" class="active">📊 推理总览</a>
+      <a data-tab="traces">🧭 Trace 列表</a>
+      <a data-tab="calltree">🌳 调用树</a>
+      <a data-tab="flame">🔥 火焰图</a>
+      <a data-tab="waterfall">🌊 瀑布时间线</a>
+    </nav>
+    <div class="sidebar-foot">
+      <a href="/" target="_blank">← 返回客服聊天页</a>
+      <a href="/admin" target="_blank" style="margin-top:8px;display:block">→ 客服管理后台</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- 概览 -->
+    <section class="tab-panel active" id="panel-dashboard">
+      <h2>推理总览</h2>
+      <div class="stat-grid" id="statGrid"></div>
+      <div class="panel-hint">
+        <p>📖 <strong>这是什么平台？</strong>每次你向智能客服发送一条消息，系统都会在服务端生成一条
+        <strong>Trace</strong>（推理链路记录），包含若干层层嵌套的 <strong>Span</strong>（阶段测量点）。</p>
+        <p style="margin-top:8px">🌳 <strong>调用树</strong>：按父子关系展示一条 trace 的所有 span —— 关注「先做什么后做什么」。<br/>
+        🔥 <strong>火焰图</strong>：按耗时宽度堆叠 span —— 关注「时间花在哪」；支持单条 trace 与跨多条聚合两种模式。<br/>
+        🌊 <strong>瀑布时间线</strong>：把 span 按开始/结束时间摊在时间轴上 —— 关注「并发与先后」。</p>
+      </div>
+      
+      <h3 class="sec-title">💡 推理步骤（ReAct 循环）</h3>
+      <div class="pipeline" id="pipeline">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-title">接收用户消息</div>
+          <div class="step-desc">handle_chat 接收请求，创建 trace root span</div>
+          <div class="step-file">service.py · run()</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-title">思考 / 意图识别</div>
+          <div class="step-desc">模型生成 thinking 增量 → thinking span</div>
+          <div class="step-file">mock_model.py · _decide</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="step step-loop">
+          <div class="step-num">3</div>
+          <div class="step-title">工具调用（可循环）</div>
+          <div class="step-desc">tool span（生成参数）→ tool_exec span（执行+回填结果）</div>
+          <div class="step-file">tools/*.py · FunctionTool</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-title">生成回复</div>
+          <div class="step-desc">基于工具结果组织文本吐出 → text span</div>
+          <div class="step-file">mock_model.py · _compose_*</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-title">输出事件流</div>
+          <div class="step-desc">done/SSE 事件→前端渲栋；trace 落盘 TraceStore</div>
+          <div class="step-file">service.py · _translate</div>
+        </div>
+        <div class="loop-note">↻ 步骤 2 → 3 可循环多轮（ReAct：思考→行动→观察→再思考）</div>
+      </div>
+      <h3 class="sec-title">工具调用统计</h3>
+      <table class="tbl">
+        <thead><tr><th>工具</th><th>调用次数</th><th>累计耗时</th><th>平均耗时</th><th>最大耗时</th><th>错误</th></tr></thead>
+        <tbody id="toolBody"><tr><td colspan="6" class="muted">暂无数据，先去跟客服聊聊吧</td></tr></tbody>
+      </table>
+    </section>
+
+    <!-- Trace 列表 -->
+    <section class="tab-panel" id="panel-traces">
+      <h2>Trace 列表</h2>
+      <div class="toolbar">
+        <button id="refreshTraces" class="btn">刷新</button>
+        <input id="traceSearch" class="select" placeholder="搜索消息 / 工具 / trace_id" style="min-width:280px">
+        <button id="clearTraces" class="btn danger">清空记录</button>
+        <span class="muted" id="traceCount"></span>
+      </div>
+      <div class="trace-list" id="traceList">
+        <div class="empty muted">暂无 trace，请先在客服聊天页发送一条消息</div>
+      </div>
+    </section>
+
+    <!-- 调用树 -->
+    <section class="tab-panel" id="panel-calltree">
+      <h2>调用树（Call Tree）</h2>
+      <div class="toolbar">
+        <select id="callTraceSelect" class="select" style="min-width:520px"></select>
+        <span class="muted">每个 span 展开=子阶段；绿色=正常，红色=出错</span>
+      </div>
+      <div class="tree-box" id="callTree"><div class="empty muted">← 选择上方 trace 查看</div></div>
+    </section>
+
+    <!-- 火焰图 -->
+    <section class="tab-panel" id="panel-flame">
+      <h2>火焰图（Flame Graph）</h2>
+      <div class="toolbar">
+        <label class="muted">模式：
+          <select id="flameMode" class="select">
+            <option value="single">单条 trace</option>
+            <option value="agg">聚合最近 N 条</option>
+          </select>
+        </label>
+        <select id="flameTraceSelect" class="select" style="min-width:520px"></select>
+        <select id="flameLimit" class="select">
+          <option value="50">聚合最近 50 条</option>
+          <option value="100" selected>聚合最近 100 条</option>
+          <option value="200">聚合最近 200 条</option>
+        </select>
+        <span class="muted">hover 查看详情，宽度=累计耗时</span>
+      </div>
+      <div class="flame-box" id="flameBox"><div class="empty muted">暂无数据</div></div>
+      <div class="flame-tip hidden" id="flameTip"></div>
+      <div class="legend" id="flameLegend"></div>
+    </section>
+
+    <!-- 瀑布 -->
+    <section class="tab-panel" id="panel-waterfall">
+      <h2>瀑布时间线（Waterfall）</h2>
+      <div class="toolbar">
+        <select id="wfTraceSelect" class="select" style="min-width:520px"></select>
+        <span class="muted">左对齐=同一时刻开始；bar 长度=耗时</span>
+      </div>
+      <div class="wf-box" id="wfBox"><div class="empty muted">← 选择上方 trace 查看</div></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="/web/debug.js"></script>
+</body>
+</html>
