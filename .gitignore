@@ -22,11 +22,14 @@ venv/
 讲稿.md
 面试八股文.md
 简历_AI_Agent项目经验.md
-低空多机协同Agent_复用实施方案.md
 multi_agent_section.md
 
 # ---- 临时 / 调试脚本与产物 ----
-_*.py
+# 注意：不要用 _*.py —— 会误伤 __init__.py（见 backend/__init__.py）
+_enhance_mmd.py
+backend/_check_bytes.py
+backend/_fix_degradation.py
+backend/_patch_getattr.py
 _*.txt
 _*.png
 _*.log
